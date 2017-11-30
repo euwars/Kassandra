@@ -46,7 +46,7 @@ public class Kassandra {
          Returns a QueryResult Enum through the callback
      
      */
-    public init(host: String = "localhost", port: Int32 = 9042, using authentication: (username: String, password: String)? = nil, cqlVersion: String = config.cqlVersion) {
+    public init(host: String = "localhost", port: Int32 = 9042, using authentication: (username: String, password: String)? = nil, cqlVersion: String = "3.2.0") {
 
         config.setHostAndPort(host: host, port: port)
         config.setCQLVersion(cqlVersion: cqlVersion)

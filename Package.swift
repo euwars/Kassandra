@@ -1,3 +1,4 @@
+// swift-tools-version:4.0
 /**
  * Copyright IBM Corporation 2016
  *
@@ -18,7 +19,20 @@ import PackageDescription
 
 let package = Package(
     name: "Kassandra",
+    products: [
+        .library(
+            name: "Kassandra",
+            targets: ["Kassandra"]),
+        ],
     dependencies: [   
-	.Package(url: "https://github.com/IBM-Swift/BlueSSLService.git", majorVersion: 0, minor: 12),
-    ]
+        .package(url: "https://github.com/IBM-Swift/BlueSSLService.git", .upToNextMinor(from: "0.12.67"))
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package. A target defines a module or a test suite.
+        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
+        .target(
+            name: "Kassandra",
+            dependencies: ["SSLService"],
+            exclude: ["Kassandra.xcodeproj", "README.md"]),
+        ]
 )
