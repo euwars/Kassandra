@@ -323,6 +323,8 @@ extension Kassandra {
 
                 if self.buffer.count >= 9 {
                     self.unpack()
+                } else if self.buffer.count == 0 {
+                    sock.close()
                 }
                 
                 self.read()
