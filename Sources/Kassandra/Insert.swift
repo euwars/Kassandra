@@ -24,14 +24,17 @@ public struct Insert: Query {
     
     var consistency: Consistency
     
+    var ttl: Int?
+    
     var flags: Flags = .none
     
     public var preparedID: [Byte]? = nil
     
-    public init(_ fields: [String: Any], into tableName: String, consistency: Consistency = .any) {
+    public init(_ fields: [String: Any], into tableName: String, consistency: Consistency = .any, ttl: Int? = nil) {
         self.fields = fields
         self.tableName = tableName
         self.consistency = consistency
+        self.ttl = ttl
     }
     
     public mutating func set(consistency: Consistency = .any, flags: Flags = .none) {
@@ -49,6 +52,9 @@ public struct Insert: Query {
         let keys = packKeys(fields)
         let vals = packValues(fields)
         
+        if let hasTTL = self.ttl {
+            return ("INSERT INTO \(tableName) (\(keys)) VALUES(\(vals)) USING TTL \(hasTTL);")
+        }
         return ("INSERT INTO \(tableName) (\(keys)) VALUES(\(vals));")
     }
     
